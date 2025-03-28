@@ -1,39 +1,35 @@
-const customAllSettled = (promises) => {
-    const results = []
-    let resolvedPromises = 0
+const customAny = (promises) => {
+    const errors = []
+    let rejectedPromises = 0
 
     return new Promise((resolve, reject) => {
         if(promises.length === 0) {
-            resolve(results)
+            resolve(new AggregateError(errors, "Empty Array"))
         }
+
         promises.forEach((promise, index) => {
             Promise.resolve(promise)
-            .then((value) => {
-                results[index] = {status: 'fulfilled', value}
-                resolvedPromises++
-
-                if(resolvedPromises === promises.length) {
-                    resolve(results)
-                }
+            .then((res) => {
+                resolve(res)
             })
-            .catch((err) => {
-                results[index] = {status: 'rejected', reason: err}
-                resolvedPromises++
+            .catch((reason) => {
+                errors[index] = reason
+                rejectedPromises++
 
-                if(resolvedPromises === promises.length) {
-                    resolve(results)
+                if(rejectedPromises === promises.length) {
+                    reject(new AggregateError(errors, "All promises rejected"))
                 }
             })
         })
     })
 }
 
-const promise1 = customAllSettled([])
+const promise1 = customAny([])
 
 promise1.then((res) => console.log(res))
 .catch((err) => console.error(err))
 
-const promise2 = customAllSettled([
+const promise2 = customAny([
     Promise.resolve(1),
     new Promise((resolve) => setTimeout(() => resolve(2), 2000)),
     Promise.resolve(3),
@@ -42,10 +38,10 @@ const promise2 = customAllSettled([
 promise2.then((res) => console.log(`Resolved with 2 -`, res))
 .catch((err) => console.error(err))
 
-const promise3 = customAllSettled([
-    Promise.resolve(1),
-    new Promise((resolve) => setTimeout(() => resolve(2), 2000)),
-    Promise.resolve(3),
+const promise3 = customAny([
+    Promise.reject(1),
+    new Promise((resolve, reject) => setTimeout(() => reject(2), 2000)),
+    Promise.reject(3),
     Promise.reject(4),
     Promise.reject(5)
 ])
@@ -53,7 +49,7 @@ const promise3 = customAllSettled([
 promise3.then((res) => console.log(`Resolved with 3 - `, res))
 .catch((err) => console.error(`Rejected with 3 - `, err))
 
-const promise4 = customAllSettled([
+const promise4 = customAny([
     null,
     undefined,
     new Promise((resolve) => setTimeout(() => resolve(2), 2000)),

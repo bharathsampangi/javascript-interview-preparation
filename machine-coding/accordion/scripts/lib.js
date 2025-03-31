@@ -6,7 +6,6 @@ let defaultConfig = {
 let container
 
 export function Accordion(config) {
-    console.log("running")
     config = JSON.parse(JSON.stringify(config))
     Object.keys(defaultConfig).forEach(key => {
         defaultConfig[key] = config[key]

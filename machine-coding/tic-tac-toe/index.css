@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
+.box {
+    background-color: #e3e3e3;
+    margin: 0 auto;
+}
+
+.tick {
+    font-size: 2rem;
+    padding: 0 auto;
+}
+
+.cross {
+    font-size: 2rem;
+}

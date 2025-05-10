@@ -1,0 +1,36 @@
+* {
+    padding: 0;
+    margin: 0
+}
+
+.tabs-header {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    background-color: lightblue;
+}
+
+.tabs-header > div {
+    padding: 1rem 2rem;
+    cursor: pointer;
+}
+
+.tabs-header > div:hover {
+    background-color: violet;
+}
+
+[data-tab-content] {
+    display: none;
+}
+
+.active [data-tab-header] {
+    background-color: violet;
+}
+
+.tabs-header > div.active {
+    background-color: violet;
+}
+
+.tabs-content > div.active {
+    display: block;
+}

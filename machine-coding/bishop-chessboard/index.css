@@ -1,0 +1,32 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.bishop-chessboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+table {
+    border: 1px solid #444;
+}
+
+.box {
+    border: .5px solid #444;
+}
+
+.white {
+    background-color: white;
+    /* border: 1px solid #444; */
+}
+
+.black {
+    background-color: black;
+}
+
+.orange {
+    background-color: gold;
+}
